@@ -17,7 +17,7 @@ Feel free to Google anything, this is not a memory challenge.
 
 ## Part A:
 
-The first step is to allow the user to sort by various criteria. You should be able to sort by <strong>RMA Number</strong>, <strong>Customer Name</strong>, and <strong>Date</strong>
+The first step is to allow the user to sort by various criteria. You should be able to sort by <strong>RMA Number</strong>, <strong>Customer Name</strong>, and <strong>Date</strong>.
 
 ### Criteria:
 
