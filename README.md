@@ -10,14 +10,14 @@ parts of the challenge. We want to know what you're thinking.
 Feel free to Google anything, this is not a memory challenge.
 
 ## Setup
-- Clone down the repo: 
+- Clone down the repo: `git clone git@github.com:cagallo/continuum-fe-challenge.git`
 - Run `npm install`
 - Run `npm run dev`
 - Go to `http://localhost:5173` to see the running app
 
 ## Part A:
 
-The first step is to allow the user to sort by various criteria. You should be able to sort by <strong>RMA Number</strong>, <strong>Customer Name</strong>, and <strong>Date</strong>
+The first step is to allow the user to sort by various criteria. You should be able to sort by <strong>RMA Number</strong>, <strong>Customer Name</strong>, and <strong>Date</strong>.
 
 ### Criteria:
 
