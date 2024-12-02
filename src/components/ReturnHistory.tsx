@@ -30,7 +30,7 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
   const [sortField, setSortField] = useState<SortField>('rmaNumber');
 
   const handleSortClick = (field: SortField) => {
-    // TODO: Implement sorting
+    setSortField(field);
     console.log('Sort by:', field);
   };
 
@@ -44,6 +44,9 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
     // TODO: Implement previous page
     console.log('Previous page clicked');
   };
+
+  // TODO: Add your sorting logic here
+  const sortedData = returnOrders
 
   const formatDate = (dateString: string): string => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -91,7 +94,7 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {returnOrders.map((order: ReturnOrder) => (
+                {sortedData.map((order: ReturnOrder) => (
                   <TableRow key={order.rmaNumber} className='hover:bg-gray-50'>
                     <TableCell className='font-medium'>{order.rmaNumber}</TableCell>
                     <TableCell>{order.customerId}</TableCell>
