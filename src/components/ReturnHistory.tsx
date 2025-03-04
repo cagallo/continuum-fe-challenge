@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -28,11 +28,26 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
 }) => {
   const [page, setPage] = useState(0);
   const [sortField, setSortField] = useState<SortField>('rmaNumber');
+  const [sortedData, setSortedData] = useState<ReturnOrder[]>([]);
+  const [currPageData, setCurrPageData] = useState<ReturnOrder[]>([]);
+
+  useEffect(() => {
+    handleSortedData(returnOrders, sortField);
+  }, []);
 
   const handleSortClick = (field: SortField) => {
     setSortField(field);
+    handleSortedData(returnOrders, field);
     console.log('Sort by:', field);
+    setPage(0); // reset to first page when sorting changes
   };
+
+    // TODO: Add your sorting logic here
+  const handleSortedData = (orders: ReturnOrder[], field: SortField) => {
+    const sortedOrders = [...orders]
+
+    setSortedData(sortedOrders);
+  }
 
   // TODO: Implement pagination (5 items per page)
   const handleNextPage = () => {
@@ -44,9 +59,6 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
     // TODO: Implement previous page
     console.log('Previous page clicked');
   };
-
-  // TODO: Add your sorting logic here
-  const sortedData = returnOrders
 
   const formatDate = (dateString: string): string => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -139,3 +151,4 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
 };
 
 export default ReturnOrdersTable;
+
