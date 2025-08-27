@@ -22,7 +22,7 @@ interface ReturnOrdersTableProps {
 }
 
 type SortField = 'rmaNumber' | 'customerName' | 'createdDate';
-
+type SortDirection = 'asc' | 'desc';
 // @ts-ignore - Will be used in pagination implementation
 const ITEMS_PER_PAGE = 5;
 
@@ -33,6 +33,8 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
   const [page, setPage] = useState(0);
   const [sortField, setSortField] = useState<SortField>('rmaNumber');
   const [sortedData, setSortedData] = useState<ReturnOrder[]>([]);
+   // @ts-ignore - Will be used in sorting implementation
+   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   // @ts-ignore - Will be used in pagination implementation
   const [currPageData, setCurrPageData] = useState<ReturnOrder[]>([]);
 
