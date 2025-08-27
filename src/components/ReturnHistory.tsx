@@ -23,12 +23,17 @@ interface ReturnOrdersTableProps {
 
 type SortField = 'rmaNumber' | 'customerName' | 'createdDate';
 
+// @ts-ignore - Will be used in pagination implementation
+const ITEMS_PER_PAGE = 5;
+
 const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
   isLoading = false,
 }) => {
+  // @ts-ignore - Will be used in pagination implementation
   const [page, setPage] = useState(0);
   const [sortField, setSortField] = useState<SortField>('rmaNumber');
   const [sortedData, setSortedData] = useState<ReturnOrder[]>([]);
+  // @ts-ignore - Will be used in pagination implementation
   const [currPageData, setCurrPageData] = useState<ReturnOrder[]>([]);
 
   useEffect(() => {
@@ -42,8 +47,11 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
     setPage(0); // reset to first page when sorting changes
   };
 
-    // TODO: Add your sorting logic here
-  const handleSortedData = (orders: ReturnOrder[], field: SortField) => {
+  // TODO: Add your sorting logic here
+  const handleSortedData = (orders: ReturnOrder[], 
+    // @ts-ignore - Will be used in sorting implementation
+    field: SortField
+  ) => {
     const sortedOrders = [...orders]
 
     setSortedData(sortedOrders);
@@ -151,4 +159,3 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
 };
 
 export default ReturnOrdersTable;
-
