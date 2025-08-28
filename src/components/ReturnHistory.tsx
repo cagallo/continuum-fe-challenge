@@ -22,52 +22,67 @@ interface ReturnOrdersTableProps {
 }
 
 type SortField = 'rmaNumber' | 'customerName' | 'createdDate';
-type SortDirection = 'asc' | 'desc';
-// @ts-ignore - Will be used in pagination implementation
-const ITEMS_PER_PAGE = 5;
 
 const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
   isLoading = false,
 }) => {
-  // @ts-ignore - Will be used in pagination implementation
   const [page, setPage] = useState(0);
   const [sortField, setSortField] = useState<SortField>('rmaNumber');
   const [sortedData, setSortedData] = useState<ReturnOrder[]>([]);
-   // @ts-ignore - Will be used in sorting implementation
-   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
-  // @ts-ignore - Will be used in pagination implementation
   const [currPageData, setCurrPageData] = useState<ReturnOrder[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  
+  const ITEMS_PER_PAGE = 5;
 
   useEffect(() => {
-    handleSortedData(returnOrders, sortField);
+    // On component mount, set sortedData to the imported data
+    setSortedData(returnOrders);
+    setTotalPages(Math.ceil(returnOrders.length / ITEMS_PER_PAGE));
   }, []);
+
+  useEffect(() => {
+    // Update current page data whenever page or sortedData changes
+    updatePaginatedData();
+  }, [page, sortedData]);
 
   const handleSortClick = (field: SortField) => {
     setSortField(field);
-    handleSortedData(returnOrders, field);
+    
+    // TODO: Implement sorting logic and apply it to the data
+    // This should call handleSortedData with the appropriate parameters
+    
     console.log('Sort by:', field);
     setPage(0); // reset to first page when sorting changes
   };
 
   // TODO: Add your sorting logic here
-  const handleSortedData = (orders: ReturnOrder[], 
-    // @ts-ignore - Will be used in sorting implementation
-    field: SortField
-  ) => {
-    const sortedOrders = [...orders]
-
+  const handleSortedData = (orders: ReturnOrder[], field: SortField) => {
+    // Implement your sorting logic here
+    // Remember to handle different data types (string vs date)
+    // and consider adding sort direction (asc/desc) functionality
+    
+    const sortedOrders = [...orders];
+    
     setSortedData(sortedOrders);
-  }
+    setTotalPages(Math.ceil(sortedOrders.length / ITEMS_PER_PAGE));
+  };
 
-  // TODO: Implement pagination (5 items per page)
+  const updatePaginatedData = () => {
+    const startIndex = page * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    setCurrPageData(sortedData.slice(startIndex, endIndex));
+  };
+
   const handleNextPage = () => {
-    // TODO: Implement next page
-    console.log('Next page clicked');
+    if (page < totalPages - 1) {
+      setPage(page + 1);
+    }
   };
 
   const handlePreviousPage = () => {
-    // TODO: Implement previous page
-    console.log('Previous page clicked');
+    if (page > 0) {
+      setPage(page - 1);
+    }
   };
 
   const formatDate = (dateString: string): string => {
@@ -116,16 +131,17 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedData.map((order: ReturnOrder) => (
-                  <TableRow key={order.rmaNumber} className='hover:bg-gray-50'>
-                    <TableCell className='font-medium'>{order.rmaNumber}</TableCell>
-                    <TableCell>{order.customerId}</TableCell>
-                    <TableCell>{order.customerName}</TableCell>
-                    <TableCell>{order.returnType}</TableCell>
-                    <TableCell>{formatDate(order.createdDate)}</TableCell>
-                  </TableRow>
-                ))}
-                {(!returnOrders || returnOrders.length === 0) && (
+                {currPageData.length > 0 ? (
+                  currPageData.map((order: ReturnOrder) => (
+                    <TableRow key={order.rmaNumber} className='hover:bg-gray-50'>
+                      <TableCell className='font-medium'>{order.rmaNumber}</TableCell>
+                      <TableCell>{order.customerId}</TableCell>
+                      <TableCell>{order.customerName}</TableCell>
+                      <TableCell>{order.returnType}</TableCell>
+                      <TableCell>{formatDate(order.createdDate)}</TableCell>
+                    </TableRow>
+                  ))
+                ) : (
                   <TableRow>
                     <TableCell colSpan={5} className='text-center py-6 text-gray-500'>
                       No return orders found
@@ -138,17 +154,19 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
           <div className='flex justify-center gap-4 p-4 border-t' style={{ marginTop: '1.5em' }}>
             <button
               onClick={handlePreviousPage}
-              className='px-4 py-2 rounded bg-gray-100 hover:bg-gray-200'
+              disabled={page === 0}
+              className={`px-4 py-2 rounded ${page === 0 ? 'bg-gray-50 text-gray-400 cursor-not-allowed' : 'bg-gray-100 hover:bg-gray-200'}`}
               style={{ margin: '5px' }}
             >
               Previous
             </button>
             <span className='px-4 py-2'>
-              Page 1 of 1
+              Page {page + 1} of {totalPages || 1}
             </span>
             <button
               onClick={handleNextPage}
-              className='px-4 py-2 rounded bg-gray-100 hover:bg-gray-200'
+              disabled={page >= totalPages - 1}
+              className={`px-4 py-2 rounded ${page >= totalPages - 1 ? 'bg-gray-50 text-gray-400 cursor-not-allowed' : 'bg-gray-100 hover:bg-gray-200'}`}
               style={{ margin: '5px' }}
             >
               Next
