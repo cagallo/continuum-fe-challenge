@@ -1,7 +1,7 @@
 # Return Orders Table Challenge
 
 ## Overview
-Your task is to enhance the ReturnOrdersTable component by implementing data fetching with TanStack Query, improving the sorting functionality, and implementing pagination.
+Your task is to enhance the ReturnOrdersTable component by implementing data fetching with TanStack Query and improving the sorting functionality.
 
 ## Part 1: Implement TanStack Query
 
