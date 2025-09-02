@@ -7,7 +7,7 @@ const ReturnHistoryLayout: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className='bg-gray-50'>
       <div className='p-8 max-w-7xl mx-auto'>
         {/* Top section with HISTORY and tabs */}
         <div className='flex justify-between items-center mb-6'> {/* Reduced from mb-12 */}

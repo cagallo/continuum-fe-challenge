@@ -35,31 +35,24 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
   const ITEMS_PER_PAGE = 5;
 
   useEffect(() => {
-    // On component mount, set sortedData to the imported data
     setSortedData(returnOrders);
     setTotalPages(Math.ceil(returnOrders.length / ITEMS_PER_PAGE));
   }, []);
 
   useEffect(() => {
-    // Update current page data whenever page or sortedData changes
     updatePaginatedData();
   }, [page, sortedData]);
 
   const handleSortClick = (field: SortField) => {
-    setSortField(field);
-    
     // TODO: Implement sorting logic and apply it to the data
-    // This should call handleSortedData with the appropriate parameters
-    
     console.log('Sort by:', field);
-    setPage(0); // reset to first page when sorting changes
   };
 
   // TODO: Add your sorting logic here
-  const handleSortedData = (orders: ReturnOrder[], field: SortField) => {
+  const sortReturnOrders = (orders: ReturnOrder[], field: SortField) => {
     // Implement your sorting logic here
     // Remember to handle different data types (string vs date)
-    // and consider adding sort direction (asc/desc) functionality
+    // and add sort direction (asc/desc) functionality
     
     const sortedOrders = [...orders];
     
@@ -101,7 +94,7 @@ const ReturnOrdersTable: React.FC<ReturnOrdersTableProps> = ({
   };
 
   return (
-    <div className='flex justify-center items-center min-h-screen'>
+    <div className='flex justify-center items-center' style={{ marginTop: '3em' }}>
       <Card className={`h-3/5 ${isLoading ? 'opacity-50' : ''}`} style={{ width: '65em' }}>
         <CardContent className='p-0 h-full'>
           <div className='overflow-x-auto overflow-y-auto h-full'>
